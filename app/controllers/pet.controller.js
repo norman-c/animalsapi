@@ -109,3 +109,13 @@ exports.deleteAll = (req, res) => {
         else res.send({ message: `All Pets were deleted successfully!` });
     });
 };
+
+exports.deleteAllByType = (req, res) => {
+    Pet.removeAllByType((err, data) => {
+        if (err)
+            res.status(500).send({
+                message: err.message || "Some error occurred while removing all pets."
+            });
+        else res.send({ message: `All Pets were deleted successfully!` });
+    });
+};

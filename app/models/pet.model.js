@@ -40,8 +40,22 @@ Pet.findById = (petId, result) => {
     });
 };
 
+
 Pet.getAll = result => {
     sql.query("SELECT * FROM pets", (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log("pets: ", res);
+        result(null, res);
+    });
+};
+
+Pet.getAllByType = (type, result) => {
+    sql.query("SELECT * FROM pets WHERE type = ?", type, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -96,6 +110,19 @@ Pet.remove = (id, result) => {
 
 Pet.removeAll = result => {
     sql.query("DELETE FROM pets", (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log(`deleted ${res.affectedRows} pets`);
+        result(null, res);
+    });
+};
+
+Pet.removeAllByType = (type, result) => {
+    sql.query("DELETE FROM pets WHERE type = ?", type, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
