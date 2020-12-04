@@ -79,17 +79,17 @@ exports.update = (req, res) => {
     }
 
     Pet.updateById(
-        req.query.petid,
+        req.body.petid,
         new Pet(req.body),
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
                     res.status(404).send({
-                        message: `Not found Pet with id ${req.query.petid}.`
+                        message: `Not found Pet with id ${req.body.petid}.`
                     });
                 } else {
                     res.status(500).send({
-                        message: "Error updating Pet with id " + req.query.petid
+                        message: "Error updating Pet with id " + req.body.petid
                     });
                 }
             } else res.send(data);
