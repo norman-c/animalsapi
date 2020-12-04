@@ -1,27 +1,28 @@
 const sql = require("./db.js");
 
 // constructor
-const Dog = function(dog) {
-    this.breed = dog.breed;
-    this.name = dog.name;
-    this.age = dog.age;
+const Pet = function(pet) {
+    this.type = pet.type;
+    this.breed = pet.breed;
+    this.name = pet.name;
+    this.age = pet.age;
 };
 
-Dog.create = (newDog, result) => {
-    sql.query("INSERT INTO dogs SET ?", newDog, (err, res) => {
+Pet.create = (newDog, result) => {
+    sql.query("INSERT INTO pets SET ?", newDog, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
             return;
         }
 
-        console.log("created dog: ", { id: res.insertId, ...newDog });
+        console.log("created pet: ", { id: res.insertId, ...newDog });
         result(null, { id: res.insertId, ...newDog });
     });
 };
 
-Dog.findById = (dogId, result) => {
-    sql.query(`SELECT * FROM dogs WHERE id = ${dogId}`, (err, res) => {
+Pet.findById = (petId, result) => {
+    sql.query(`SELECT * FROM pets WHERE id = ${petId}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -29,32 +30,32 @@ Dog.findById = (dogId, result) => {
         }
 
         if (res.length) {
-            console.log("found dog: ", res[0]);
+            console.log("found pet: ", res[0]);
             result(null, res[0]);
             return;
         }
 
-        // not found Dog with the id
+        // not found Pet with the id
         result({ kind: "not_found" }, null);
     });
 };
 
-Dog.getAll = result => {
-    sql.query("SELECT * FROM dogs", (err, res) => {
+Pet.getAll = result => {
+    sql.query("SELECT * FROM pets", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
             return;
         }
 
-        console.log("dogs: ", res);
+        console.log("pets: ", res);
         result(null, res);
     });
 };
 
-Dog.updateById = (id, dog, result) => {
+Pet.updateById = (id, pet, result) => {
     sql.query(
-        "UPDATE dogs SET breed = ?, name = ?, age = ? WHERE id = ?", [dog.breed, dog.name, dog.age, id],
+        "UPDATE pets SET breed = ?, name = ?, age = ? WHERE id = ?", [pet.breed, pet.name, pet.age, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);
@@ -63,19 +64,19 @@ Dog.updateById = (id, dog, result) => {
             }
 
             if (res.affectedRows == 0) {
-                // not found Dog with the id
+                // not found Pet with the id
                 result({ kind: "not_found" }, null);
                 return;
             }
 
-            console.log("updated dog: ", { id: id, ...dog });
-            result(null, { id: id, ...dog });
+            console.log("updated pet: ", { id: id, ...pet });
+            result(null, { id: id, ...pet });
         }
     );
 };
 
-Dog.remove = (id, result) => {
-    sql.query("DELETE FROM dogs WHERE id = ?", id, (err, res) => {
+Pet.remove = (id, result) => {
+    sql.query("DELETE FROM pets WHERE id = ?", id, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
@@ -83,27 +84,27 @@ Dog.remove = (id, result) => {
         }
 
         if (res.affectedRows == 0) {
-            // not found Dog with the id
+            // not found Pet with the id
             result({ kind: "not_found" }, null);
             return;
         }
 
-        console.log("deleted dog with id: ", id);
+        console.log("deleted pet with id: ", id);
         result(null, res);
     });
 };
 
-Dog.removeAll = result => {
-    sql.query("DELETE FROM dogs", (err, res) => {
+Pet.removeAll = result => {
+    sql.query("DELETE FROM pets", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(null, err);
             return;
         }
 
-        console.log(`deleted ${res.affectedRows} dogs`);
+        console.log(`deleted ${res.affectedRows} pets`);
         result(null, res);
     });
 };
 
-module.exports = Dog;
+module.exports = Pet;

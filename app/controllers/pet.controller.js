@@ -1,6 +1,6 @@
-const Dog = require("../models/dog.model.js");
+const Pet = require("../models/pet.model.js");
 
-// Create and Save a new Dog
+// Create and Save a new Pet
 exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
@@ -9,52 +9,52 @@ exports.create = (req, res) => {
         });
     }
 
-    // Create a Dog
-    const dog = new Dog({
+    // Create a Pet
+    const pet = new Pet({
         email: req.body.email,
         name: req.body.name,
         active: req.body.active
     });
 
-    // Save Dog in the database
-    Dog.create(dog, (err, data) => {
+    // Save Pet in the database
+    Pet.create(pet, (err, data) => {
         if (err)
             res.status(500).send({
-                message: err.message || "Some error occurred while creating the Dog."
+                message: err.message || "Some error occurred while creating the Pet."
             });
         else res.send(data);
     });
 };
 
-// Retrieve all Dogs from the database.
+// Retrieve all Pets from the database.
 exports.findAll = (req, res) => {
-    Dog.getAll((err, data) => {
+    Pet.getAll((err, data) => {
         if (err)
             res.status(500).send({
-                message: err.message || "Some error occurred while retrieving dogs."
+                message: err.message || "Some error occurred while retrieving pets."
             });
         else res.send(data);
     });
 };
 
-// Find a single Dog with a dogId
+// Find a single Pet with a dogId
 exports.findOne = (req, res) => {
-    Dog.findById(req.params.dogId, (err, data) => {
+    Pet.findById(req.params.dogId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Dog with id ${req.params.dogId}.`
+                    message: `Not found Pet with id ${req.params.dogId}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving Dog with id " + req.params.dogId
+                    message: "Error retrieving Pet with id " + req.params.dogId
                 });
             }
         } else res.send(data);
     });
 };
 
-// Update a Dog identified by the dogId in the request
+// Update a Pet identified by the dogId in the request
 exports.update = (req, res) => {
     // Validate Request
     if (!req.body) {
@@ -63,18 +63,18 @@ exports.update = (req, res) => {
         });
     }
 
-    Dog.updateById(
+    Pet.updateById(
         req.params.dogId,
-        new Dog(req.body),
+        new Pet(req.body),
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
                     res.status(404).send({
-                        message: `Not found Dog with id ${req.params.dogId}.`
+                        message: `Not found Pet with id ${req.params.dogId}.`
                     });
                 } else {
                     res.status(500).send({
-                        message: "Error updating Dog with id " + req.params.dogId
+                        message: "Error updating Pet with id " + req.params.dogId
                     });
                 }
             } else res.send(data);
@@ -82,30 +82,30 @@ exports.update = (req, res) => {
     );
 };
 
-// Delete a Dog with the specified dogId in the request
+// Delete a Pet with the specified dogId in the request
 exports.delete = (req, res) => {
-    Dog.remove(req.params.dogId, (err, data) => {
+    Pet.remove(req.params.dogId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Dog with id ${req.params.dogId}.`
+                    message: `Not found Pet with id ${req.params.dogId}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Could not delete Dog with id " + req.params.dogId
+                    message: "Could not delete Pet with id " + req.params.dogId
                 });
             }
-        } else res.send({ message: `Dog was deleted successfully!` });
+        } else res.send({ message: `Pet was deleted successfully!` });
     });
 };
 
-// Delete all Dogs from the database.
+// Delete all Pets from the database.
 exports.deleteAll = (req, res) => {
-    Dog.removeAll((err, data) => {
+    Pet.removeAll((err, data) => {
         if (err)
             res.status(500).send({
-                message: err.message || "Some error occurred while removing all dogs."
+                message: err.message || "Some error occurred while removing all pets."
             });
-        else res.send({ message: `All Dogs were deleted successfully!` });
+        else res.send({ message: `All Pets were deleted successfully!` });
     });
 };
