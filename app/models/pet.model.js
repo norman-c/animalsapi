@@ -108,18 +108,6 @@ Pet.remove = (id, result) => {
     });
 };
 
-Pet.removeAll = result => {
-    sql.query("DELETE FROM pets", (err, res) => {
-        if (err) {
-            console.log("error: ", err);
-            result(null, err);
-            return;
-        }
-
-        console.log(`deleted ${res.affectedRows} pets`);
-        result(null, res);
-    });
-};
 
 Pet.removeAllByType = (type, result) => {
     sql.query("DELETE FROM pets WHERE type = ?", type, (err, res) => {

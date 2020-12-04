@@ -2,34 +2,40 @@ module.exports = app => {
     const pets = require("../controllers/pet.controller.js");
 
     // Create a new Pet
+    //http://localhost:3000/pets/?name=lg&type=cat&breed=white cat&age=6
     app.post("/pets", pets.create);
+
+    // app.post("/pets/upload", upload.single("file"), uploadController.uploadFiles);
 
 
     // Retrieve all Pets
+    // http://localhost:3000/pets/
     app.get("/pets", pets.findAll);
 
     // Retrieve all Pets by type
-    app.get("/pets/:petType", pets.findAllByType);
+    // To call http://localhost:3000/pets/pettype?type=dog
+    app.get("/pets/pettype", pets.findAllByType);
 
     // Retrieve a single Pet with petId
-    app.get("/pets/:petId", pets.findOne);
+    // http://localhost:3000/pets/petid?petid=11
+    app.get("/pets/petid", pets.findOne);
 
 
 
     // Update a Pet with petId
-    app.put("/pets/:petId", pets.update);
+    //- POST request, needs to be sent in the fetch by client will be a JSON
+    app.put("/pets/update", pets.update);
 
 
 
 
     // Delete a Pet with petId
-    app.delete("/pets/:petId", pets.delete);
-
-    // Delete all Pets
-    app.delete("/pets", pets.deleteAll);
+    // http://localhost:3000/pets/delete?petid=51
+    app.delete("/pets/delete", pets.delete);
 
     // Delete all Pets by type
-    app.delete("/pets", pets.deleteAllByType);
+    //http://localhost:3000/pets/detelebytype?type=cat
+    app.delete("/pets/detelebytype", pets.deleteAllByType);
 
 
 };
