@@ -5,6 +5,9 @@ module.exports = {
     DB: "heroku_ba7834bb2a8f15d"
 };
 
+module.exports = {
+    'secret': 'supersecret'
+};
 
 // mysql --host=us-cdbr-east-02.cleardb.com --user=bb9d2d5cab8605 --password=d10e9c3e --reconnect heroku_ba7834bb2a8f15d
 

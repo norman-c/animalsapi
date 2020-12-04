@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require('cors')
 const multer = require('multer');
 
-var storage = multer.diskStorage({
+let storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, 'uploads')
     },
@@ -12,10 +12,11 @@ var storage = multer.diskStorage({
     }
 })
 
-var upload = multer({ storage: storage })
+let upload = multer({ storage: storage })
 
 const app = express()
-
+let AuthController = require('./auth/AuthController');
+app.use('/api/auth', AuthController);
 app.use('*', cors())
 
 // parse requests of content-type: application/json
