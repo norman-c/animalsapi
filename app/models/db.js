@@ -5,10 +5,10 @@ const dbConfig = require("../config/db.config.js");
 
 let pool = mysql.createPool({
     connectionLimit: 10,
-    host: "us-cdbr-east-02.cleardb.com",
-    user: "b64404cf689cb3",
-    password: "c57933b1",
-    database: "heroku_248f2bc82734799"
+    host: dbConfig.HOST,
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    database: dbConfig.DB
 });
 
 // const connection = mysql.createConnection({
