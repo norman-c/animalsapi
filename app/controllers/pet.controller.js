@@ -77,7 +77,7 @@ exports.update = (req, res) => {
             message: "Content can not be empty!"
         });
     }
-
+    console.log(req.body)
     Pet.updateById(
         req.body.petid,
         new Pet(req.body),
