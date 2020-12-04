@@ -72,6 +72,7 @@ exports.findOne = (req, res) => {
 // Update a Pet identified by the dogId in the request
 exports.update = (req, res) => {
     // Validate Request
+    console.log(req.body)
     if (!req.body) {
         res.status(400).send({
             message: "Content can not be empty!"
