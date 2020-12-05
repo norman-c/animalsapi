@@ -126,3 +126,32 @@ exports.deleteAllByType = (req, res) => {
         else res.send({ message: `All Pets were deleted successfully!` });
     });
 };
+
+exports.upload = (req, res) => {
+    // Validate request
+    if (!req.query) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+    }
+
+    // Create a Pet
+    // console.log("params", req.params)
+    // console.log("query ", req.query)
+    // console.log("body", req.body)
+    const pet = new Pet({
+        type: req.query.type,
+        name: req.query.name,
+        breed: req.query.breed,
+        age: req.query.age
+    });
+
+    // Save Pet in the database
+    Pet.create(pet, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message: err.message || "Some error occurred while creating the Pet."
+            });
+        else res.send(data);
+    });
+};

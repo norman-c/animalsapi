@@ -3,20 +3,10 @@ const bodyParser = require("body-parser");
 const cors = require('cors')
 const multer = require('multer');
 
-let storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads')
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
-})
-
-let upload = multer({ storage: storage })
+var upload = multer({ storage: storage })
 
 const app = express()
-let AuthController = require('app/controllers/auth.controller');
-app.use('/api/auth', AuthController);
+
 app.use('*', cors())
 
 // parse requests of content-type: application/json
@@ -31,7 +21,18 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to Pets Api." });
 });
 
-app.post('/pets/uploadpetpic', upload.single('picture'), (req, res) => {
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+})
+
+var upload = multer({ storage: storage })
+
+app.post('/api/v1pets/uploadpetpic', upload.single('picture'), (req, res) => {
     var img = fs.readFileSync(req.file.path);
     var encode_image = img.toString('base64');
     // Define a JSONobject for the image attributes for saving to database
@@ -66,7 +67,6 @@ app.get('/pets/getpetpic', (req, res) => {
 
 require("./app/routes/pet.routes.js")(app);
 require("./app/routes/owner.routes.js")(app);
-module.exports = app;
 // set port, listen for requests
 app.listen((process.env.PORT || 3000), () => {
     console.log("Server is running on port 3000.");
