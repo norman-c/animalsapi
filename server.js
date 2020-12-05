@@ -15,7 +15,7 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage })
 
 const app = express()
-let AuthController = require('../controllers/auth.controller');
+let AuthController = require('../controllers/auth.controller.js');
 app.use('/api/auth', AuthController);
 app.use('*', cors())
 
