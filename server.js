@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require('cors')
 const multer = require('multer');
 
-var upload = multer({ storage: storage })
 
 const app = express()
 
@@ -21,16 +20,16 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to Pets Api." });
 });
 
-// var storage = multer.diskStorage({
-//     destination: function(req, file, cb) {
-//         cb(null, 'uploads')
-//     },
-//     filename: function(req, file, cb) {
-//         cb(null, file.fieldname + '-' + Date.now())
-//     }
-// })
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+})
 
-// var upload = multer({ storage: storage })
+var upload = multer({ storage: storage })
 
 // app.post('/api/v1pets/uploadpetpic', upload.single('picture'), (req, res) => {
 //     var img = fs.readFileSync(req.file.path);
