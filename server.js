@@ -21,48 +21,48 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to Pets Api." });
 });
 
-var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, 'uploads')
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
-})
+// var storage = multer.diskStorage({
+//     destination: function(req, file, cb) {
+//         cb(null, 'uploads')
+//     },
+//     filename: function(req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now())
+//     }
+// })
 
-var upload = multer({ storage: storage })
+// var upload = multer({ storage: storage })
 
-app.post('/api/v1pets/uploadpetpic', upload.single('picture'), (req, res) => {
-    var img = fs.readFileSync(req.file.path);
-    var encode_image = img.toString('base64');
-    // Define a JSONobject for the image attributes for saving to database
+// app.post('/api/v1pets/uploadpetpic', upload.single('picture'), (req, res) => {
+//     var img = fs.readFileSync(req.file.path);
+//     var encode_image = img.toString('base64');
+//     // Define a JSONobject for the image attributes for saving to database
 
-    var finalImg = {
-        contentType: req.file.mimetype,
-        image: new Buffer(encode_image, 'base64')
-    };
-    db.collection('quotes').insertOne(finalImg, (err, result) => {
-        console.log(result)
+//     var finalImg = {
+//         contentType: req.file.mimetype,
+//         image: new Buffer(encode_image, 'base64')
+//     };
+//     db.collection('quotes').insertOne(finalImg, (err, result) => {
+//         console.log(result)
 
-        if (err) return console.log(err)
+//         if (err) return console.log(err)
 
-        console.log('saved to database')
+//         console.log('saved to database')
 
 
-    })
-})
+//     })
+// })
 
-app.get('/pets/getpetpic', (req, res) => {
-    db.collection('mycollection').find().toArray((err, result) => {
+// app.get('/pets/getpetpic', (req, res) => {
+//     db.collection('mycollection').find().toArray((err, result) => {
 
-        const imgArray = result.map(element => element._id);
-        console.log(imgArray);
+//         const imgArray = result.map(element => element._id);
+//         console.log(imgArray);
 
-        if (err) return console.log(err)
-        res.send(imgArray)
+//         if (err) return console.log(err)
+//         res.send(imgArray)
 
-    })
-});
+//     })
+// });
 
 
 require("./app/routes/pet.routes.js")(app);

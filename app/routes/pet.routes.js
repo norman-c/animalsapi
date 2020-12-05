@@ -6,7 +6,7 @@ module.exports = app => {
     app.post("/api/v1/pets", pets.create);
 
 
-    app.post('/api/v1/pets/upload', upload.single('picture'), pets.upload);
+    // app.post('/api/v1/pets/upload', upload.single('picture'), pets.upload);
 
     // Retrieve all Pets
     // https://petsapi4537.herokuapp.com/api/v1/pets/
