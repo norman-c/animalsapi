@@ -64,17 +64,17 @@ exports.update = (req, res) => {
     }
 
     Owner.updateById(
-        req.query.id,
+        req.body.id,
         new Pet(req.body),
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
                     res.status(404).send({
-                        message: `Not found Pet with id ${req.query.id}.`
+                        message: `Not found Pet with id ${req.body.id}.`
                     });
                 } else {
                     res.status(500).send({
-                        message: "Error updating Pet with id " + req.query.id
+                        message: "Error updating Pet with id " + req.body.id
                     });
                 }
             } else res.send(data);

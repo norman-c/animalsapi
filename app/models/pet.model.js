@@ -69,7 +69,7 @@ Pet.getAllByType = (type, result) => {
 
 Pet.updateById = (id, pet, result) => {
     sql.query(
-        "UPDATE pets SET breed = ?, name = ?, age = ? WHERE id = ?", [pet.breed, pet.name, pet.age, id],
+        "UPDATE pets SET type = ?, breed = ?, name = ?, age = ? WHERE id = ?", [pet.type, pet.breed, pet.name, pet.age, id],
         (err, res) => {
             if (err) {
                 console.log("error: ", err);
