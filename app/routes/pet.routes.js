@@ -2,7 +2,7 @@ module.exports = app => {
     const pets = require("../controllers/pet.controller.js");
 
     // Create a new Pet
-    //https://petsapi4537.herokuapp.com/api/v1/pets/?name=lg&type=cat&breed=white cat&age=6
+    //https://petsapi4537.herokuapp.com/api/v1/pets/?name=lg&type=cat&breed=whitecat&age=6
     app.post("/api/v1/pets", pets.create);
 
 
